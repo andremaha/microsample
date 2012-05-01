@@ -14,6 +14,10 @@ describe "StaticPages" do
 	page.should have_selector('title', 
 				:text => "#{base_title} | Home")
     end
+    it "should not have an empty body tag" do
+      visit '/static_pages/home'
+      page.should_not have_content(/\s*/)
+    end
   end
 
   describe "Help page" do
