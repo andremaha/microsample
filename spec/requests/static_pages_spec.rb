@@ -9,11 +9,17 @@ describe "StaticPages" do
     	visit '/static_pages/home'
 	page.should have_content('MicroSample')
     end
-    it "should have a title 'Home'" do
+    it "should have a base title 'MicroSample'" do
     	visit '/static_pages/home'
 	page.should have_selector('title', 
-				:text => "#{base_title} | Home")
+				:text => "#{base_title}")
     end
+    
+    it "should not have a custom page title" do
+      visit '/static_pages/home'
+      page.should_not have_selector('title', :text => '| Home')
+    end
+    
     it "should not have an empty body tag" do
       visit '/static_pages/home'
       page.should_not have_content(/\s*/)
@@ -37,7 +43,7 @@ describe "StaticPages" do
         visit '/static_pages/contact'
 	page.should have_content('Contact')
     end
-    it "should have a title 'Title'" do
+    it "should have a title 'Contanct'" do
         visit '/static_pages/contact'
 	page.should have_selector('title',
 				:text => "#{base_title} | Contact")
