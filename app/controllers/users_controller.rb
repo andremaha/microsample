@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   
   def show
+    @options = { size: 150 }
     @user = User.find(params[:id])
     @title = @user.name
   end
