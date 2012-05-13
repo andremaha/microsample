@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     @options = { size: 150 }
     @user = User.find(params[:id])
     @title = @user.name
+    @microsamples = @user.microsamples.paginate(page: params[:page])
   end
   
   def new
@@ -51,14 +52,7 @@ class UsersController < ApplicationController
   end
   
   private
-  
-    def logged_in_user
-      unless logged_in?
-        store_location
-        redirect_to login_path, notice: "Please log in"
-      end
-    end
-    
+      
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_path, notice: "Looks like you are trying to access the page that does not belong to you. Please play nicely!") unless current_user?(@user)

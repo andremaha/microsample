@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Microsample::Application.load_tasks
+Microsamplt::Application.load_tasks

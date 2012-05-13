@@ -62,6 +62,7 @@ describe "Authentication" do
     describe "for non-logged-in users" do
       let(:user) { FactoryGirl.create(:user) }
       
+      
       describe "when attempting to visit a protected page" do
         before do
           visit edit_user_path(user)
@@ -77,6 +78,22 @@ describe "Authentication" do
         end
       end
       
+      describe "in the Microsamples controller" do 
+        
+        describe "submitting to the create action" do
+          before { post microsamples_path }
+          specify { response.should redirect_to(login_path) }
+        end
+        
+        describe "submitting to the destroy action" do
+          before do 
+            microsample = FactoryGirl.create(:microsample)
+            delete microsample_path(microsample)
+          end
+          specify { response.should redirect_to(login_path) }
+        end
+        
+      end
       
       describe "in the Users controller" do
         

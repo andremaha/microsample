@@ -9,11 +9,13 @@
 #  updated_at      :datetime        not null
 #  password_digest :string(255)
 #  remember_token  :string(255)
+#  admin           :boolean
 #
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
   has_secure_password
+  has_many :microsamples, dependent: :destroy
   
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -23,6 +25,11 @@ class User < ActiveRecord::Base
   
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
+  
+  def feed
+    # Only preliminary. "Following users" feature will replace it
+    Microsample.where("user_id = ?", id)
+  end
   
   private
     def create_remember_token

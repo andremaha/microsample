@@ -7,4 +7,14 @@
 			</h1>
 		</section>
 	</aside>
+	
+	<div class="span8">
+		<% if @user.microsamples.any? %>
+			<h3><%= pluralize(@user.microsamples.count, 'Sample') %> Samples of <%= @user.name %>'s Life </h3>
+			<ol class="microsamples">
+				<%= render @microsamples %>
+			</ol>
+			<%= will_paginate @microsamples %>
+		<% end %>
+	</div>
 </div>

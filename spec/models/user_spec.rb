@@ -9,6 +9,7 @@
 #  updated_at      :datetime        not null
 #  password_digest :string(255)
 #  remember_token  :string(255)
+#  admin           :boolean
 #
 
 require 'spec_helper'
@@ -27,6 +28,8 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
+  it { should respond_to(:microsamples) }
+  it { should respond_to(:feed) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -120,6 +123,41 @@ describe User do
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+  
+  describe "microsamples associations" do
+    
+    before { @user.save }
+    
+    let!(:older_microsample) do
+      FactoryGirl.create(:microsample, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_microsample) do
+      FactoryGirl.create(:microsample, user: @user, created_at: 1.hour.ago)
+    end
+    
+    it "should have the right microsamples in the right order" do
+      @user.microsamples.should == [newer_microsample, older_microsample]
+    end
+    
+    it "should destroy associated microsamples" do
+      microsamples = @user.microsamples
+      @user.destroy
+      microsamples.each do |sample|
+        Microsample.find_by_id(sample.id).should be_nil
+      end
+    end
+    
+    describe "status" do
+      let(:unfollowed_sample) do
+        FactoryGirl.create(:microsample, user: FactoryGirl.create(:user))
+      end
+      
+      its(:feed) { should include(newer_microsample) }
+      its(:feed) { should include(older_microsample) }
+      its(:feed) { should_not include(unfollowed_sample) }
+    end
+    
   end
   
 end

@@ -1,0 +1,9 @@
+<li>
+	<span class="content"><%= microsample.content %></span>
+	<span class="timestamp">
+		Posted <%= time_ago_in_words(microsample.created_at) %>
+	</span>
+	<% if current_user?(microsample.user) %>
+		<%= link_to "delete", microsample, class: 'icon-trash delete', method: :delete, confirm: "You sure this sample of you life is not interesting anymore?", title: microsample.content %>
+	<% end %>
+</li>

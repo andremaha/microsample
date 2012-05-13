@@ -1,3 +1,19 @@
+<% if logged_in? %>
+<div class="row">
+	<aside class="span4">
+		<section>
+			<%= render 'shared/user_info' %>
+		</section>
+		<section>
+			<%= render 'shared/microsample_form' %>
+		</section>
+	</aside>
+	<div class="span8">
+		<h3>MicroSamples</h3>
+		<%= render 'shared/feed' %>
+	</div>
+</div>
+<% else %>
 <div class="center hero-unit">
 	<h1>MicroSamplt</h1>
 	
@@ -5,4 +21,5 @@
 	
 	<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
 </div>
+<% end %>
 

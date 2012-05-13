@@ -1,0 +1,7 @@
+<%= form_for(@microsample) do |f| %>
+<%= render 'shared/error_messages', object: f.object %>
+<div class="field">
+	<%= f.text_area :content, placeholder: "How is your life now?" %>
+</div>
+<%= f.submit "Take a Sample", class: "btn btn-large btn-primary" %>
+<% end %>
