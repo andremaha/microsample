@@ -8,10 +8,11 @@
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
 #  password_digest :string(255)
+#  remember_token  :string(255)
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation, :remember_token
+  attr_accessible :email, :name, :password, :password_confirmation
   has_secure_password
   
   validates :name, presence: true, length: { maximum: 50 }

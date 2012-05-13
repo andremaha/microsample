@@ -1,0 +1,7 @@
+<li>
+	<%= gravatar_for user, size: 52 %>
+	<%= link_to user.name, user %>
+	<% if current_user.admin? && !current_user?(user) %>
+		 <%= link_to "delete", user, class: 'icon-trash delete', method: :delete, confirm: "You sure? After all that user may still be beautiful - just doesn't show it." %>
+	<% end %>
+</li>

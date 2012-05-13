@@ -8,6 +8,7 @@
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
 #  password_digest :string(255)
+#  remember_token  :string(255)
 #
 
 require 'spec_helper'
@@ -24,9 +25,16 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
-  it { should respond_to(:remember_token)}
+  it { should respond_to(:remember_token) }
+  it { should respond_to(:admin) }
 
   it { should be_valid }
+  it { should_not be_admin }
+  
+  describe "with admin attribute set to 'true'" do
+    before { @user.toggle!(:admin) }
+    it { should be_admin }
+  end
   
   describe "when name is not present" do
     before { @user.name = " " }
@@ -111,7 +119,7 @@ describe User do
   
   describe "remember token" do
     before { @user.save }
-    its(:rememeber_token) { should_not be_blank }
+    its(:remember_token) { should_not be_blank }
   end
   
 end

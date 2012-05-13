@@ -1,0 +1,11 @@
+<h1>Our wonderful users</h1>
+
+<h2><%= pluralize(@users.count, 'reason') %> why MicroSamplt exists</h2>
+
+<%= will_paginate %>
+
+<ul class="users">
+	<%= render @users %>
+</ul>
+
+<%= will_paginate %>

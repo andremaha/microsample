@@ -130,6 +130,25 @@ input, textarea, select, .uneditable-input {
 	@extend .error;
 }
 
+/* users index */
+
+.users {
+	list-style: none;
+	margin: 0;
+	li {
+		overflow: auto;
+		padding: 10px 0;
+	
+		&:last-child {
+			
+		}
+		
+		a.delete {
+			text-indent: -300em;
+		}
+	}
+}
+
 /* footer */
 
 footer {
@@ -163,7 +182,7 @@ footer {
 
 /* miscellaneous */
 
-.version-history {
+ul {
 	list-style: none;
 	text-align: left;
 }
