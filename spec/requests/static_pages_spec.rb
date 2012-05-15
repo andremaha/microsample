@@ -27,6 +27,20 @@ describe "StaticPages" do
         end
       end
     end
+    
+    describe "for signed-in user with one microsample" do
+      before do
+        new_user = FactoryGirl.create(:user)
+        FactoryGirl.create(:microsample, user: new_user, content: "This is the content of one microsample")
+        log_in new_user
+        visit root_path
+      end
+      
+      it "should render the user's info in a sidebar" do   
+        page.should have_selector('span', text: 'view my profile')
+        page.should have_selector('span', text: '1 microsample')    
+      end
+    end
   end
 
   describe "Help page" do

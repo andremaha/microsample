@@ -101,6 +101,7 @@ describe "UserPages" do
   
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
+    before { 50.times { FactoryGirl.create(:microsample, user: user, content: "Something") } }
     let!(:m1) { FactoryGirl.create(:microsample, user: user, content: "Foo") }
     let!(:m2) { FactoryGirl.create(:microsample, user: user, content: "Bar") }
     before { visit user_path(user) }
@@ -108,11 +109,15 @@ describe "UserPages" do
     it { should have_selector('h1', text: user.name) }
     it { should have_selector('title', text: user.name) }
     
-    describe "microsamples" do
-      it { should have_content(m1.content) }
-      it { should have_content(m2.content) }
-      it { should have_content(user.microsamples.count) }
+    it { should have_content(user.microsamples.count) }
+    it { should have_content(m1.content) }
+    it { should have_content(m2.content) }
+      
+    describe "pagination of microsamples" do
+      it { should have_link('Next') }
+      its(:html) { should match('>2</a>') }
     end
+    
   end
   
   describe "edit" do
