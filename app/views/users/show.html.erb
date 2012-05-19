@@ -6,9 +6,13 @@
 				<%= @user.name %>
 			</h1>
 		</section>
+		<section>
+			<%= render 'shared/stats' %>
+		</section>
 	</aside>
 	
 	<div class="span8">
+		<%= render 'follow_form' if logged_in? %>
 		<% if @user.microsamples.any? %>
 			<h3><%= pluralize(@user.microsamples.count, 'Sample') %> of <%= @user.name %>'s Life </h3>
 			<ol class="microsamples">

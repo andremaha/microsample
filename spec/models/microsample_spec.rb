@@ -49,5 +49,24 @@ describe Microsample do
     before { @microsample.content = "a" * 141 }
     it { should_not be_valid }
   end
+  
+  describe "from_users_followed_by" do
+    
+    let(:user)        { FactoryGirl.create(:user) }
+    let(:other_user)  { FactoryGirl.create(:user) }
+    let(:third_user)  { FactoryGirl.create(:user) }
+    
+    before { user.follow!(other_user) }
+    
+    let(:own_post)        { user.microsamples.create!(content: "foo") }
+    let(:followed_post)   { other_user.microsamples.create!(content: "bar") }
+    let(:unfollowed_post) { third_user.microsamples.create!(content: "baz") }
+    
+    subject { Microsample.from_users_followed_by(user) }
+    
+    it { should include(own_post) }
+    it { should include(followed_post) }
+    it { should_not include(unfollowed_post) }
+  end
 end
 

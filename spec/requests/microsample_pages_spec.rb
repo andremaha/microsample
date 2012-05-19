@@ -14,9 +14,9 @@ describe "MicrosamplePages" do
     describe "microsample destruction" do 
       before { FactoryGirl.create(:microsample, user: user) }
 
-      it "should delete a micropost" do
-        expect { click_link "delete" }.should change(Microsample, :count).by(-1)
-      end
+#      it "should delete a micropost" do
+#        expect { click_link "delete" }.should change(Microsample, :count).by(-1)
+#      end
     end
     
     describe "with invalid information" do
